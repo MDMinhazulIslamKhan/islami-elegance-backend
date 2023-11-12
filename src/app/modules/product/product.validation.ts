@@ -14,9 +14,13 @@ const createProductZodSchema = z.object({
       category: z.enum([...categoriesList] as [string, ...string[]], {
         required_error: 'Category is required',
       }),
-      price: z.number({
-        required_error: 'Price is required',
-      }),
+      price: z
+        .number({
+          required_error: 'Price is required',
+        })
+        .refine(value => value >= 1, {
+          message: 'Price must be at least 1',
+        }),
       size: z
         .object({
           size: z.string().optional(),
@@ -41,7 +45,12 @@ const updateProductZodSchema = z.object({
       name: z.string().optional(),
       imgURL: z.string().optional(),
       category: z.enum([...categoriesList] as [string, ...string[]]).optional(),
-      price: z.number().optional(),
+      price: z
+        .number()
+        .refine(value => value >= 1, {
+          message: 'Price must be at least 1',
+        })
+        .optional(),
       size: z
         .object({
           size: z.string().optional(),

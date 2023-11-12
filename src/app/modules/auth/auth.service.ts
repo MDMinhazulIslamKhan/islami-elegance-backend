@@ -14,10 +14,11 @@ import { userFilterableField } from './auth.constant';
 import { calculatePagination } from '../../../helpers/paginationHelper';
 import { SortOrder } from 'mongoose';
 
-const createUser = async (user: IUser): Promise<IUser | null> => {
+const createUser = async (
+  user: IUser,
+): Promise<{ userInfo: IUser; accessToken: string } | null> => {
   const checkNumber = await User.findOne({ phoneNumber: user.phoneNumber });
   if (user.email) {
-    console.log(12);
     const checkEmail = await User.findOne({ email: user.email });
     if (checkEmail) {
       throw new ApiError(httpStatus.CONFLICT, 'Already used this email!!!');
@@ -34,7 +35,17 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
     throw new ApiError(400, 'Failed to create user!');
   }
   const result = await User.findById(createdUser._id);
-  return result;
+  const tokenInfo = {
+    id: createdUser.id,
+    phoneNumber: user.phoneNumber,
+    role: 'user',
+  };
+  const accessToken = jwtHelpers.createToken(
+    tokenInfo,
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string,
+  );
+  return { userInfo: result!, accessToken };
 };
 
 const loginUser = async (payload: ILoginRequest): Promise<string> => {
