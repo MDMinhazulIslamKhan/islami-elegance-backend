@@ -39,6 +39,7 @@ const productSchema = new Schema<IProduct>(
     },
     sellCount: {
       type: Number,
+      default: 0,
     },
     availability: {
       type: Boolean,

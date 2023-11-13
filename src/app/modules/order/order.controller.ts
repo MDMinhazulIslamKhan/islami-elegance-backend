@@ -24,6 +24,101 @@ const createOrder: RequestHandler = catchAsync(
   },
 );
 
+const deleteOrder: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+
+    const result = await OrderService.deleteOrder(
+      id,
+      req.user as UserInfoFromToken,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      data: result,
+      message: 'Order deleted Successfully!!!',
+    });
+  },
+);
+
+const myPendingOrders = catchAsync(async (req: Request, res: Response) => {
+  const result = await OrderService.myPendingOrders(
+    req.user as UserInfoFromToken,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Pending Orders retrieved Successfully.',
+    data: result,
+  });
+});
+
+const myCompletedOrder = catchAsync(async (req: Request, res: Response) => {
+  const result = await OrderService.myCompletedOrder(
+    req.user as UserInfoFromToken,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Completed Orders retrieved Successfully.',
+    data: result,
+  });
+});
+
+const acceptOrder: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const result = await OrderService.acceptOrder(
+      id,
+      req.user as UserInfoFromToken,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Order accepted Successfully.',
+      data: result,
+    });
+  },
+);
+
+const cancelOrder: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const result = await OrderService.cancelOrder(
+      id,
+      req.user as UserInfoFromToken,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Order cancel Successfully.',
+      data: result,
+    });
+  },
+);
+
+const deliveredOrder: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const result = await OrderService.deliveredOrder(
+      id,
+      req.user as UserInfoFromToken,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Order delivered Successfully.',
+      data: result,
+    });
+  },
+);
+
 const allPendingOrders = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, orderFilterableField);
   const paginationOptions = pick(req.query, paginationFields);
@@ -85,4 +180,10 @@ export const OrderController = {
   allPendingOrders,
   allDeliveredOrders,
   allAcceptedOrders,
+  deleteOrder,
+  myPendingOrders,
+  myCompletedOrder,
+  acceptOrder,
+  cancelOrder,
+  deliveredOrder,
 };

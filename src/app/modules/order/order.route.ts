@@ -14,29 +14,29 @@ router.post(
   OrderController.createOrder,
 );
 
-// router.delete('/delete/:id', auth(), OrderController.deleteOrder);
+router.delete('/delete/:id', auth(), OrderController.deleteOrder);
 
-// router.get('/my-pending-orders', auth(), OrderController.myPendingOrders);
+router.get('/my-pending-orders', auth(), OrderController.myPendingOrders);
 
-// router.get('/my-completed-order', auth(), OrderController.myCompletedOrder);
+router.get('/my-completed-orders', auth(), OrderController.myCompletedOrder);
 
-// router.patch(
-//   '/accept/:id',
-//   auth(ENUM_USER_ROLE.ADMIN),
-//   OrderController.acceptOrder,
-// );
+router.patch(
+  '/accept/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  OrderController.acceptOrder,
+);
 
-// router.patch(
-//   '/cancel/:id',
-//   auth(ENUM_USER_ROLE.ADMIN),
-//   OrderController.cancelOrder,
-// );
+router.patch(
+  '/cancel/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  OrderController.cancelOrder,
+);
 
-// router.patch(
-//   '/delivered/:id',
-//   auth(ENUM_USER_ROLE.ADMIN),
-//   OrderController.deliveredOrder,
-// );
+router.patch(
+  '/delivered/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  OrderController.deliveredOrder,
+);
 
 router.get(
   '/all-pending-orders',
