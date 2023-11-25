@@ -1,18 +1,14 @@
 import { Model, Types } from 'mongoose';
-import { categories } from './product.constant';
+import { categories, sizes } from './product.constant';
 export type IProduct = {
   proId?: string;
   imgURL: string;
   name: string;
   category: categories;
   price: number;
-  size?: {
-    size: string;
-    chest: string;
-    length: string;
-    sleeve: string;
-  };
+  size?: Array<sizes>;
   description: string;
+  shortDescription: string;
   facebookURL?: string;
   sellCount: number;
   availability: boolean;

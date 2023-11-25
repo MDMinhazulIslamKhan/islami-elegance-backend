@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IProduct, ProductModel } from './product.interface';
-import { categoriesList } from './product.constant';
+import { categoriesList, sizesList } from './product.constant';
 
 const productSchema = new Schema<IProduct>(
   {
@@ -25,10 +25,11 @@ const productSchema = new Schema<IProduct>(
       required: true,
     },
     size: {
-      size: { type: String },
-      chest: { type: String },
-      length: { type: String },
-      sleeve: { type: String },
+      type: [{ type: String, enum: sizesList }],
+    },
+    shortDescription: {
+      type: String,
+      required: true,
     },
     description: {
       type: String,

@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OrderRouters = void 0;
+const express_1 = __importDefault(require("express"));
+const validateRequest_1 = __importDefault(require("../../middleware/validateRequest"));
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const order_validation_1 = require("./order.validation");
+const order_controller_1 = require("./order.controller");
+const user_1 = require("../../../enums/user");
+const router = express_1.default.Router();
+router.post('/', (0, auth_1.default)(), (0, validateRequest_1.default)(order_validation_1.OrderValidation.createOrderZodSchema), order_controller_1.OrderController.createOrder);
+router.delete('/delete/:id', (0, auth_1.default)(), order_controller_1.OrderController.deleteOrder);
+router.get('/my-pending-orders', (0, auth_1.default)(), order_controller_1.OrderController.myPendingOrders);
+router.get('/my-completed-orders', (0, auth_1.default)(), order_controller_1.OrderController.myCompletedOrder);
+router.patch('/accept/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), order_controller_1.OrderController.acceptOrder);
+router.patch('/cancel/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), order_controller_1.OrderController.cancelOrder);
+router.patch('/delivered/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), order_controller_1.OrderController.deliveredOrder);
+router.get('/all-pending-orders', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), order_controller_1.OrderController.allPendingOrders);
+router.get('/all-accepted-orders', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), order_controller_1.OrderController.allAcceptedOrders);
+router.get('/all-delivered-orders', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), order_controller_1.OrderController.allDeliveredOrders);
+exports.OrderRouters = router;

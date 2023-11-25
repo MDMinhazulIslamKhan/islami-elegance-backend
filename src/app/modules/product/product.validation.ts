@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { categoriesList } from './product.constant';
+import { categoriesList, sizesList } from './product.constant';
 
 const createProductZodSchema = z.object({
   body: z
@@ -21,14 +21,10 @@ const createProductZodSchema = z.object({
         .refine(value => value >= 1, {
           message: 'Price must be at least 1',
         }),
-      size: z
-        .object({
-          size: z.string().optional(),
-          chest: z.string().optional(),
-          length: z.string().optional(),
-          sleeve: z.string().optional(),
-        })
-        .optional(),
+      size: z.array(z.enum([...sizesList] as [string, ...string[]])).optional(),
+      shortDescription: z.string({
+        required_error: 'Sort description is required',
+      }),
       description: z.string({
         required_error: 'Description is required',
       }),

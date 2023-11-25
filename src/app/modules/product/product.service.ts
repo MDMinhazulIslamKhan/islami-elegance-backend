@@ -126,6 +126,7 @@ const createProduct = async (
   product: Partial<IProduct>,
   userInfo: UserInfoFromToken,
 ): Promise<IProduct | null> => {
+  console.log(product);
   const admin = await User.findById(userInfo.id);
   if (!admin) {
     throw new ApiError(httpStatus.CONFLICT, 'Your profile does not exist!!!');

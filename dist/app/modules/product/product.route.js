@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductRouters = void 0;
+const express_1 = __importDefault(require("express"));
+const validateRequest_1 = __importDefault(require("../../middleware/validateRequest"));
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const product_validation_1 = require("./product.validation");
+const product_controller_1 = require("./product.controller");
+const user_1 = require("../../../enums/user");
+const router = express_1.default.Router();
+router.get('/', product_controller_1.ProductController.getAllProducts);
+router.get('/single-product/:id', product_controller_1.ProductController.getSingleProduct);
+router.post('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(product_validation_1.ProductValidation.createProductZodSchema), product_controller_1.ProductController.createProduct);
+router.patch('/update/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(product_validation_1.ProductValidation.updateProductZodSchema), product_controller_1.ProductController.updateProduct);
+router.delete('/delete/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), product_controller_1.ProductController.deleteProduct);
+router.post('/review/:id', (0, validateRequest_1.default)(product_validation_1.ProductValidation.postReviewSchema), (0, auth_1.default)(), product_controller_1.ProductController.postReview);
+router.delete('/review/:id', (0, auth_1.default)(), product_controller_1.ProductController.deleteReview);
+exports.ProductRouters = router;

@@ -1,3 +1,15 @@
+export type sizes = 'SM' | 'M' | 'L' | 'XL' | 'XXL' | '6mL' | '10mL' | '25mL';
+
+export const sizesList: sizes[] = [
+  'SM',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  '6mL',
+  '10mL',
+  '25mL',
+];
 export type categories =
   | 'Jacket'
   | 'Hoodie'
