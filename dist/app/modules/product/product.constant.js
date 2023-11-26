@@ -17,8 +17,8 @@ exports.categoriesList = [
     'Jersey',
     'Panjabi',
     'T-shirt',
-    'Borka',
     'Attar',
+    'Food',
 ];
 exports.productFilterableField = [
     'searchTerm',

@@ -16,7 +16,7 @@ export type categories =
   | 'Jersey'
   | 'Panjabi'
   | 'T-shirt'
-  | 'Borka'
+  | 'Food'
   | 'Attar';
 
 export const categoriesList: categories[] = [
@@ -25,8 +25,8 @@ export const categoriesList: categories[] = [
   'Jersey',
   'Panjabi',
   'T-shirt',
-  'Borka',
   'Attar',
+  'Food',
 ];
 
 export const productFilterableField = [
